@@ -1,20 +1,28 @@
 <!DOCTYPE html>
-<!-- Bind the angular app to the html -->
-<html ng-app="myFirstApp">
+<html>
   <head>
     <meta charset="utf-8">
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
-    <title>First ng app</title>
+    <style>
+      body {
+        font-size: 1.3em;
+      }
+    </style>
+    <title>Name Numeric Value Calculator</title>
   </head>
-  <body>
-    <h1>First ng app</h1>
-    <!-- Tell the module what controller is active here -->
-    <div ng-controller="MyFirstController">
-      <!-- declaratively bind some html to our scope -->
-      <!-- make value of the input be something in our scope called "name" -->
-      <input type="text" ng-model="name">
-      Inside my input is {{name}}
+  <body ng-app="NameCalculator">
+    <h1>Name Numeric Value Calculator</h1>
+    <div ng-controller="NameCalculatorController">
+      <div>
+        Your name:
+        <input type="text"
+        ng-model="nameInput"
+        ng-keyup="displayNumeric();">
+      </div>
+      <div>
+        Total name numeric value is {{nameNumericValue}}
+      </div>
     </div>
   </body>
 </html>
