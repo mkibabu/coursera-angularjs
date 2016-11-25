@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html>
+<!-- Bind the angular app to the html -->
+<html ng-app="myFirstApp">
   <head>
     <meta charset="utf-8">
-    <title>Hello Coursera!</title>
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+    <title>First ng app</title>
   </head>
   <body>
-    <h1>Hola Students!</>
+    <h1>First ng app</h1>
+    <!-- Tell the module what controller is active here -->
+    <div ng-controller="MyFirstController">
+      <!-- declaratively bind some html to our scope -->
+      <!-- make value of the input be something in our scope called "name" -->
+      <input type="text" ng-model="name">
+      Inside my input is {{name}}
+    </div>
   </body>
 </html>
