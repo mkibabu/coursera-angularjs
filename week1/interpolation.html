@@ -2,7 +2,7 @@
 <html ng-app="MsgApp">
   <head>
     <meta charset="utf-8">
-    <script src="angular.min.js"></script>
+    <script src="../angular.min.js"></script>
     <script src="inter.js"></script>
     <title>Expressions and Interpolation</title>
   </head>
@@ -18,7 +18,7 @@
         is processed way before angular has evaluated what {{burrito}} is.
         Therefore, use ng-src instead, which makes angular block the image
         from being fetched until it's good and ready.-->
-        <img ng-src="img/{{burrito}}_burrito.jpg">
+        <img ng-src="../img/{{burrito}}_burrito.jpg">
       </div>
     </div>
   </body>
