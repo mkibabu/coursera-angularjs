@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="MsgApp">
+  <head>
+    <meta charset="utf-8">
+    <script src="../angular.min.js"></script>
+    <script src="filters.js"></script>
+    <title>Filters</title>
+  </head>
+  <body>
+    <h1>Filters</h1>
+    <div ng-controller="MsgController">
+      {{name}} has a message for you: <br> {{sayMessage()}}
+      <br>
+      <div>
+        <button ng-click="getBurrito()">Get a burrito!</button>
+        <br>
+        Cost: {{cookieCost | currency : "##" : 4}}
+        <br>
+        <img ng-src="../img/{{burrito}}_burrito.jpg">
+      </div>
+    </div>
+  </body>
+</html>
