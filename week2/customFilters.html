@@ -10,7 +10,9 @@
     <h1>Custom Filters</h1>
     <p>Original: {{sayMessage()}}</p>
     <p>Filtered: {{sayLovesInsteadOfLikes()}}</p>
-    <p>Custom filters are created in two steps:</p>
+    <p>Truth: {{sayLovesInsteadOfLikes() | truth : 'healthy' : 'cookie'}}</p>
+    <p>BIG TRUTH: {{sayLovesInsteadOfLikes() | truth : 'healthy' : 'cookie' | uppercase}}</p>
+    <p>Custom filters are created in three steps:</p>
       <ul>
         <li>Define a filter factory function. Angular expects us to use a
           factory pattern to create the filter. We create a factory for our
@@ -38,15 +40,43 @@
           above as 'custom', so we inject it as 'customFilter', and invoke it
           as 'customFilter(input)', i.e:
           <pre>
-          Ctrl.$inject = ['$scope', 'customFilter']
-          function Ctrl($scope, customFilter) {
-            var msg = 'Some Input';
-            customFilter(msg);
-          }
+            Ctrl.$inject = ['$scope', 'customFilter']
           </pre>
           As such, it&#39;s a bad idea to register your filter with the word 'filter'
           appended to the name of your filter.
           </li>
+          <li>Use the filter within the controller, much like you would any other controller
+            function, i.e:
+            <pre>
+              function Ctrl($scope, customFilter) {
+                $scope.someFunction = function() {
+                  var msg = 'Some Input';
+                  return customFilter(msg);
+                };
+              }
+            </pre>
+          </li>
         </ul>
+        <p>If a filter is to be invoked straight within the HTML of the page (rather than
+          in the JS controller), perform the first two steps above (i.e. create the filter
+          factory function, then register it with the module), then use the name that was
+          used to register it directly in the HTML to invoke it, like so:
+          <!-- ng-non-bindable makes it so Angular doesn't try to execute this example -->
+          <pre ng-non-bindable>>
+            {{custom}}
+          </pre>
+        </p>
+        <p>If the filter has custom arguments, append them to the invocation using colons
+          to separate the arguments, i.e:
+          <pre ng-non-bindable>>
+            {{custom : arg1 : arg2 : arg3}}
+          </pre>
+        </p>
+        <p>Filters can also be chained, such that the output of one is the input of <thead>
+            other, using the pipe character |, like so:
+            <pre ng-non-bindable>
+              {{sayLovesInsteadOfLikes() | custom : arg1 : arg2}}
+            </pre>
+          </p>
   </body>
 </html>
