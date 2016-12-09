@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app='MsgApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src="../angular.min.js"></script>
+    <script src="customFilters.js"></script>
+    <title>Custom Filters</title>
+  </head>
+  <body ng-controller='MsgController'>
+    <h1>Custom Filters</h1>
+    <p>Original: {{sayMessage()}}</p>
+    <p>Filtered: {{sayLovesInsteadOfLikes()}}</p>
+    <p>Custom filters are created in two steps:</p>
+      <ul>
+        <li>Define a filter factory function. Angular expects us to use a
+          factory pattern to create the filter. We create a factory for our
+          filter, and this factory returns a filter function that takes an
+          argument (i.e. the input to filter) and returns the filtered input.
+          Example:
+          <pre>
+            function CustomFilterFactory() {
+              return function(input) {
+                // change the input in some way
+                return changedInput;
+              };
+            }
+          </pre>
+        </li>
+        <li>Register the filter factory with the module. This is done in much
+          that same way that the controlleris registered with the module, i.e.
+          <br><pre>
+            angular.module('app', [])
+            .controller('ctrl', Ctrl)
+            .filter('custom', CustomFilterFactory)
+            </pre>
+          </li>
+          <li>Inject the filter in with *name*Filter, i.e. we registered it
+          above as 'custom', so we inject it as 'customFilter', and invoke it
+          as 'customFilter(input)', i.e:
+          <pre>
+          Ctrl.$inject = ['$scope', 'customFilter']
+          function Ctrl($scope, customFilter) {
+            var msg = 'Some Input';
+            customFilter(msg);
+          }
+          </pre>
+          As such, it&#39;s a bad idea to register your filter with the word 'filter'
+          appended to the name of your filter.
+          </li>
+        </ul>
+  </body>
+</html>
