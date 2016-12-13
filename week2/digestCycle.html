@@ -14,8 +14,21 @@
           Log # of watchers
         </button>
         <br><br>
+        <!--
+        One way to set up a watch: using ng-model, which is a two-way binding.
+        The digest cycle will be run twice for each keypress into this field (open
+        the console and see the output of the watch that checks when the cycle has
+        fired)
+        -->
+        <input type='text' ng-model='name'>
+        <br><br>
       </div>
       <div>
+        <!--
+        Note that the click event itself does NOT set up a watcher. It merely changes
+        the value of a variable. If there was no interpolation of the value that gets
+        changed by this button, then there'd be no watcher for it.
+        -->
         <button ng-click='countOnce()'>
           Up Once Counter (once)
         </button>
@@ -27,6 +40,10 @@
           </button>
           <br><br>
         <div>
+        <div>
+          <!-- Another way to set up a watch: interpolation -->
+          Once counter: {{onceCounter}} <br>
+          Incrementing counter: {{incrementingCounter}}<br>
     </div>
     <div>
       <p>Typically, user interactions on a page are handled by vanilla JS and its
