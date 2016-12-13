@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app='CounterApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src='../angular.min.js'></script>
+    <script src='digestCycle.js'></script>
+    <title>Digest Cycle</title>
+  </head>
+  <body>
+    <h1>The Digest Cycle</h1>
+    <div ng-controller='CounterController'>
+      <div>
+        <button ng-click='showNumberOfWatchers()'>
+          Log # of watchers
+        </button>
+        <br><br>
+      </div>
+      <div>
+        <button ng-click='countOnce()'>
+          Up Once Counter (once)
+        </button>
+        <br><br>
+      <div>
+        <div>
+          <button ng-click='incrementIncrementingCounter()'>
+            Up Incrementing Counter (once)
+          </button>
+          <br><br>
+        <div>
+    </div>
+    <div>
+      <p>Typically, user interactions on a page are handled by vanilla JS and its
+        event queue, using JS methods that are made to handle each event (e.g. onclick
+        for click event, onkeyup for keyup event, etc).
+        Angular overrides these event handlers with its own, e.g ng-click and ng-keyup.
+        One can bind these events to some handler in the Angular context ($scope, the scope
+        service), e.g by having a <pre>$scope.someHandler = function(){...};</pre> that responds
+        to a particular event, with the event defined in the HTML as, for instance, <pre>ng-click=someHandler()</pre>
+        The $scope has a special array of watchers that go through every property on which a watch has been set up
+        to check if any of the properties have changed as a result of that event. Angular kicks off this process through
+        the <pre>$digest</pre> function. There are a number of ways to trigger Angular to automatically set up watchers
+        for properties defined in $scope. A few that we've seen so far: enclosing a scope property in <pre ng-code-nobind>{{}}</pre>
+        within the HTML. Another is when you specify <pre>ng-model</pre> equal to some scope property (e.g for an input field). In both cases,
+        Angular sets up watcher functions to watch for chanes in these properties. When an event occurs, the $digest goes through the array of
+        watchers to check if any of the watched properties has changed. If anything has, it goes through the list again until all watchers report
+        that no new change has occured since the last one. The digest therefore checks the whole list of watchers at least twice, because one change
+        can trigger something else to change. This iteration over the watchers is called the digest loop, and the whole iteration is called the
+        digest cycle. Once all watchers report that nothing has changed, Angular updates the DOM with whatever values the properties have.
+        In game development, this checking-it-twice process is called 'dirty-checking'.
+      </p>
+    </div>
+  </body>
+</html>
