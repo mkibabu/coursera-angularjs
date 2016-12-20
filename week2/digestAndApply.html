@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app='CounterApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src='../angular.min.js'></script>
+    <script src='digestAndApply.js'></script>
+    <title>Digest And Apply</title>
+  </head>
+  <body>
+    <h1>The Digest and Apply Functions</h1>
+    <div ng-controller='CounterController'>
+      <div>
+        <button ng-click='incrementCounter()'>
+          Increment Counter
+        </button>
+        <br><br>
+        <div>Regular counter: {{incrementingCounter}}
+      </div>
+    </div>
+    <div>
+      <p>Applications outside our Angular scope that need to affect some Angular
+        variable have no access to the digest cycle, and thus cannot be watched to
+        see when their changes will affect our Angular changes. For this reason,
+        Angular provides the <code>$digest</code> and <code>$apply</code> functions to help
+        Angular keep track of changes to its variables caused by ng-external JS.
+      </p>
+    </div>
+  </body>
+</html>
