@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app='BindingApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src='../angular.min.js'></script>
+    <script src='waysToBind.js'></script>
+    <title>1-way, 2-way and one-time binding</title>
+  </head>
+  <body>
+    <h1>1-way, 2-way and one-time binding</h1>
+    <div ng-controller='BindingController'>
+      <p> Two-way binding example, using <code ng-nocompute>ng-model</code>. This will create a watcher;
+      clicking the button shows "1" as the number of watchers.</p>
+      <div>
+        Name: <input type="text" ng-model="firstName">&nbsp;
+        <button ng-click='setFullName()'>Set full name</button>
+      </div>
+      <br>
+      <div>
+        <p> One-time binding example, using ::interpolation. This will not create a watcher
+        until the variable is initialized, after which the watcher will be removed</p>
+        <div>Full Name: {{::fullName}}</div>
+      </div>
+      <div>
+        <p>Test the values</p>
+        <button ng-click='showNumberOfWatchers()'>Show number of watchers</button>
+        <br><br>
+        <button ng-click='logFirstName()'>Log first name</button>
+        <br><br>
+        <button ng-click='logFullName()'>Log full name</button>
+      </div>
+    </div>
+    <div>
+      <p>Ng applications create watchers for every bound variable, and therefore, there
+        may be a lot of variables being watched. Since the digest loop checks every variable
+        at least twice each time, the page might be a bit unresponsive. Keeping watchers
+        low is therefore a good idea (rule of thumb is no more than 2000). For properties that
+        only get updated once, a one-time watcher can be set up using ::interpolation. This allows
+        Ng to set up a watcher when the property is initialized, update the dom, then remove the
+        watcher. Of course, this is only suitable for properties that get changed once, at
+        initialization.
+      </p>
+    </div>
+  </body>
+</html>
