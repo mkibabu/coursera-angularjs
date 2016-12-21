@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app='ShoppingListApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src="../angular.min.js"></script>
+    <script src="17-ng-repeat.js"></script>
+    <style> body { font-size: 1.2em; }</style>
+    <title>ng-repeat</title>
+  </head>
+  <body>
+    <h1>ng-repeat</h1>
+    <p>The <code>ng-repeat</code> construct is Ng's version of a for-each loop. It has
+      just about the same syntax as well, e.g. for a collection <code>items</code>,
+      iterating over it would be <code ng-non-bindable>ng-repeat="item in items"</code>,
+      then do something with the <code>item</code> that's returned in each iteration.<p>
+    <div ng-controller='ShoppingListController'>
+      <!-- Shopping List #1: -->
+      <h3>Shopping List:</h3>
+      <!--
+      Iterate over the shopping list, and display each item in the list.
+      The <li> tag will be repeated for each item in the list
+      -->
+
+      <!-- Shopping List #1: -->
+      <!-- <ul>
+        <li ng-repeat="item in shoppingList1">{{ item }}</li>
+      </ul> -->
+
+      <!-- Shopping List #2: -->
+      <!-- This list traverses the object shopping list and displays object fields -->
+      <!-- <ul>
+        <li ng-repeat="item in shoppingList2">Buy {{item.quantity}} of {{item.name}}</li>
+      </ul> -->
+
+      <!-- Shopping List #3: -->
+      <!-- Since interpolation creates watchers, changes to the list are reflected -->
+      <p>ng-repeat exposes a special <code>$index</code> property to the body of
+      its host tag, which holds the numeric index of the item in the loop</p>
+      <span>Quantity of first item in shoppingList2</span>&nbsp;<input type="text" ng-model="shoppingList2[0].quantity">
+
+      <!-- Access to index variable via $index property of loop -->
+      <ul>
+        <li ng-repeat="item in shoppingList2">{{$index + 1}}. Buy {{item.quantity}} of {{item.name}}</li>
+      </ul>
+      <input type='text' ng-model='newItemName' placeholder='item name'>
+      <input type='text' ng-model='newItemQuantity' placeholder='item quantity'>
+      <button ng-click='addToList()'>Add to list</button>
+      <br><br>
+
+
+      <!-- <input type="text" ng-model="newItemName" placeholder="item name">
+      <input type="text" ng-model="newItemQuantity" placeholder="item quantity">
+      <button ng-click="addToList()">Add To List</button>
+      -->
+    </div>
+  </body>
+</html>
