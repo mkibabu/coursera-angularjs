@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app='ShoppingListApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src="../angular.min.js"></script>
+    <script src="18-2-filtered-ng-repeat.js"></script>
+    <style> body { font-size: 1.2em; }</style>
+    <title>Filtered ng-repeat</title>
+  </head>
+  <body>
+    <h1>Filtered ng-repeat</h1>
+    <div ng-controller='ShoppingListController'>
+      <!-- Searchable Shopping List: -->
+      <h3>Shopping List</h3>
+      <p>Ng has an in-built <code>filter</code> filter that selects a subset of items
+      from an array. See <a href='https://docs.angularjs.org/api/ng/filter/filter'>
+      the filter docs</a> for more on this. We can use it within <code>ng-repeat</code>
+      to only return particular items within an array. It therefore works in much the
+      same way as the <code>filter(callback)</p> function in valnilla JS.</p>
+      <p>Recall that filters are used within the html template as follows:
+        <pre ng-non-bindable>
+          {{expression | filter}}
+        </pre>
+        If the filter takes arguments, then separate them using colons, like so:
+        <pre ng-non-bindable>
+          {{expression | filter : arg1 : arg2 : ...}}
+        </pre>
+        We'll pass along a search term to out <code>filter</code> filter in much
+        the same way, i.e:
+        <pre ng-non-bindable>
+          &lt;li ng-repeat = 'item in list | filter : termToSearchFor'&gt;{{item}}&lt;/li&gt;
+        </pre>
+      </p>
+      <p>Item to search for: <input type-'test' ng-model='search'> </p>
+      <ul>
+        <li ng-repeat="item in shoppingList | filter : search">{{ item }}</li>
+      </ul>
+    </div>
+  </body>
+</html>
