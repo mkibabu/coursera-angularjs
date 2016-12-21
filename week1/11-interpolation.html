@@ -3,19 +3,21 @@
   <head>
     <meta charset="utf-8">
     <script src="../angular.min.js"></script>
-    <script src="filters.js"></script>
-    <title>Filters</title>
+    <script src="11-interpolation.js"></script>
+    <title>Expressions and Interpolation</title>
   </head>
   <body>
-    <h1>Filters</h1>
+    <h1>Expressions and Interpolation</h1>
     <div ng-controller="MsgController">
       {{name}} has a message for you: <br> {{sayMessage()}}
       <br>
       <div>
         <button ng-click="getBurrito()">Get a burrito!</button>
         <br>
-        Cost: {{cookieCost | currency : "##" : 4}}
-        <br>
+        <!-- If we use img src="sauce", we get 404 errors because the html
+        is processed way before angular has evaluated what {{burrito}} is.
+        Therefore, use ng-src instead, which makes angular block the image
+        from being fetched until it's good and ready.-->
         <img ng-src="../img/{{burrito}}_burrito.jpg">
       </div>
     </div>
