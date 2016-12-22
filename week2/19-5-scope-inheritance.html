@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app='ControllerAsApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src="../angular.min.js"></script>
+    <script src="19-5-scope-inheritance.js"></script>
+    <style> body { font-size: 1.2em; }</style>
+    <title>Controller As Syntax</title>
+  </head>
+  <body>
+    <h1>Controller As Syntax</h1>
+    <div>
+      <p>It's not common, nor is it good practice, to have one controller handle
+        everything on your page. Break it up so that different controllers handle
+        different portions. With DOM nesting, some controllers may be nested, and
+        Ng has <em>scope inheritance</em> that mimics prototypal inheritance.
+        This means that the scope of the outer controller is available to the inner
+        controllers. Furthermore, the inner controllers inherit prototypally from
+        the outer controller, so properties declared in the outer scope are available
+        to the scope of any inner controller, and, on the other hand, can be masked.
+      </p>
+      <p>From prototypal inheritance, recall that a child may mask the value of a
+        parent object by creating a property with the same name as a parent property.
+        Similarly, if a child changes (without initially masking) the value of a
+        parent property, that value is changed for all children of that parent, since
+        JS traverses the prototype chain to find the property,and changes it wherever
+        it's found (e.g in some parent), rather than where the change was made (i.e on
+        the child).
+      </p>
+      <p>To avoid this, Ng has a <em>controller as</em> syntax that provides us with a
+        convenient object we can use to attach properties to, and not mask or inadvertently
+        change them for other sibling controllers. This is done by declaring the Controller
+        in HTML as follows:
+        <pre ng-non-bindable>
+          ng-controller='ControllerName as someAlias'
+        </pre>
+        The <em>someAlias</em> is attached to the corresponding scope service as a property,
+        and points to an object that is an instance of the controller itself. This means
+        that the <em>this</em> keyword within the controller function now points to the
+        <em>someAlias</em> property within the controller function, and since <em>someAlias</em>
+        is an instance of the controller itself, we don't ave to inject the scope anymore.
+      </p>
+    </div>
+    <!--
+    This parent-child pair doesn't use controller-as syntax, but has prototypal
+    inheritance
+    -->
+    <!-- Uncomment this section for part 4 of lesson 19 -->
+
+    <!-- <div ng-controller='ParentController1'>
+      <div ng-controller='ChildController1'>
+      </div>
+    </div> -->
+
+    <div ng-controller='ParentController2 as parent'>
+      Parent value: {{ parent.value }}
+
+      <div ng-controller='ChildController2 as child'>
+        Child value: {{ child.value }}<br>
+        <!--
+        Since the child has access to the parent scope, we can access the parent's
+        properties in the child as well.
+        -->
+        Parent value: {{ parent.value }}
+      </div>
+    </div>
+  </body>
+</html>

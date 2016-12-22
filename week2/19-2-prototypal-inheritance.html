@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="19-2-prototypal-inheritance.js"></script>
+    <title>Prototypal Inheritance</title>
+  </head>
+  <body>
+    <h1>Prototypal Inheritance</h1>
+    <p>Prior lessons have used a simple controller declaration inside the HTML, i.e.
+    <code ng-non-bindable>ng-controller='NameOfController'</code>. A better syntax
+    format is <em>controller as</em> syntax. Understanding that requires some info
+    on <em>prototypal inheritance</em> in JS.</p>
+    <p>Prototypal inheritance is based on object instances (rather than classes, which
+    is what object oriented inheritance is based on). So the original object instance
+    becomes the prototype for all subsequently created objects. If an property of an
+    object does not exist, JS traverse the object's <em>prototype chain</em> and searches
+    through that object's parents to see if that property can be resolved.
+
+  </body>
+</html>
