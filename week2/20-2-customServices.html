@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app='ShoppingListApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src="../angular.min.js"></script>
+    <script src="20-2-customServices.js"></script>
+    <style> body { font-size: 1.2em; }</style>
+    <title>Custom Services</title>
+  </head>
+  <body>
+    <h1>Custom Services</h1>
+    <p>Controllers are the ViewModel in our MVVM design pattern. Their purpose is to
+      represent the state of the view, i.e. the data that the view should display. They
+      should not have business logic that changes the state/data. They only set up the
+      initial state of the $scope, and add behaviour to the $scope that responds to
+      events in the view that may affect the values in the $scope. Controllers are not
+      supposed to handle business logic (they were in our examples, until now). They're
+      also not supposed to be used to share data across components. To do these things,
+      use a <em>custom service</em>.
+    </p>
+    <p>A custom service is registered in much the same way as a controller, i.e.:
+      <pre ng-non-bindable>
+        angular.module('app', [])
+        .controller('Ctrl', Ctrl)
+        .service('CustomServiceName', CustomServiceName);
+      </pre>
+      Basically, the <code>service()</code> method takes the name of the service
+      and the name of the function constructor used to create the service, much
+      like the <code>controller()</code> method does. Similarly, much like the
+      <code>controller()</code> method, the name of the service used is the same
+      name used to inject the service into other controllers, services, etc. The
+      service Ng creates for us using this method is guaranteed to be a singleton.
+      This allows us to share data across multiple controllers. The service is also
+      only lazy instantiated, i.e. only actually created when needed.
+    </p>
+    <div ng-controller='ShoppingListAddController as itemAdder'>
+      <input type="text" ng-model="itemAdder.itemName" placeholder="item name">
+      <input type="text" ng-model="itemAdder.itemQuantity" placeholder="quantity">
+      <button ng-click="itemAdder.addItem();">Add Item To Shopping List</button>
+    </div>
+
+    <div ng-controller='ShoppingListShowController as showList'>
+      <ol>
+        <li ng-repeat="item in showList.items">
+          {{ item.quantity }} of {{ item.name }}
+          <button ng-click="showList.removeItem($index);">Remove</button>
+        </li>
+      </ol>
+    </div>
+  </body>
+</html>
