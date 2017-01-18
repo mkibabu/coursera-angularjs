@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app='ControllerAsApp'>
+  <head>
+    <meta charset="utf-8">
+    <script src="../angular.min.js"></script>
+    <script src="21-2-customServicesWithFactory.js"></script>
+    <style>
+    body {
+      font-size: 1.2em;
+    }
+    #list1, #list2 {
+      float: left;
+    }
+    #list2 {
+      margin-left: 40px;
+    }
+    .error {
+      color: red;
+    }
+    </style>
+    <title>Custom Services via Factory</title>
+  </head>
+  <body>
+    <h1>Custom Service Through a Factory</h1>
+    <p>Services in Ng are typically singletons; one service instance is created and
+      shared by all controllers. Sometimes, however, you want each controller to have
+      it's own, customized instance of a service. Factories can help with this.
+      The factory design pattern provides a central place to create new objects
+      and functions. A factory can produce any type of dynamically customizable
+      objects, not just singletons.
+    </p>
+    <p>Some confusion exists in Ng-dom, between the <code>factory()</code> and
+      <code>service()</code> functions. <code>.factory()</code> is NOT just another
+      way to create the same service that is created with <code>.service()</code>,
+      but <em>it can be, if need arises</em>. <code>.service()</code> is a factory
+      with limited functionality; it always produces the same type of service, a
+      singleton, and provides no easy way to customize the created service's behaviour.
+    </p>
+    <p>A service factory function is registered in much the same way as a service,
+      like so:
+      <pre>
+        angular.module('app', [])
+        .controller('Ctrl', Ctrl)
+        .factory('CustomServiceFactory', CustomServiceFactory);
+      </pre>
+      The factory function (here, <code>CustomServiceFactory<code>) is the function that
+      is expected to <em>produce</em> a service, unlike with the <code>.service()
+      </code> function, where <code>CustomService</code> is expected to <em>be</em>
+      the service whose methods we then invoke.
+    </p>
+    <p>Creating the factory function can be done in a couple of ways, viz:
+      <pre ng-non-bindable>
+        // returns a function as a result of the execution of the factory service
+        function CustomServiceFactory() {
+          var factory = function() {
+            // we invoke 'new', i.e. we control how the service is created. Using
+            // .service(), the service returned is the base, non-customized version.
+            return new CustomService();
+          };
+          return factory;
+        }
+        // we invoke the functon returned by CustomService in order to get the service
+        var someServ = CustomServiceFactory();
+        // use the service
+        someServ.method();
+      </pre>
+      The second way returns an object literal, i.e:
+      <pre ng-non-bindable>
+        function CustomServiceFactory() {
+          var factory = {
+            getCustomService: function() {
+              return new CustomService();
+            };
+          };
+          return factory;
+        }
+        // we can then retrieve that literal's getSomeService() property (whose
+        // value is a function) and implement it, getting an instance of the service.
+        var someServ = CustomServiceFactory.getSomeService();
+        // use the service
+        someServ.method();
+      </pre>
+    </p>
+    <!-- LIST #1 - unlimited items -->
+    <div id="list1" ng-controller='ShoppingListController1 as list1'>
+      <h3>Shopping List #1</h3>
+      <input type="text" ng-model="list1.itemName" placeholder="item name">
+      <input type="text" ng-model="list1.itemQuantity" placeholder="quantity">
+      <button ng-click="list1.addItem();">Add Item</button>
+      <ol>
+        <li ng-repeat="item in list1.items">
+          {{ item.quantity }} of {{ item.name }}
+          <button ng-click="list1.removeItem($index);">Remove Item</button>
+        </li>
+      </ol>
+      <div class="error">Error: {{list1.errorMessage}}</div>
+    </div>
+
+    <!-- LIST #2 (limited to 3 items) -->
+    <div id="list2" ng-controller='ShoppingListController2 as list2'>
+      <h3>Shopping List #2 (limited to 3 items)</h3>
+      <input type="text" ng-model="list2.itemName" placeholder="item name">
+      <input type="text" ng-model="list2.itemQuantity" placeholder="quantity">
+      <button ng-click="list2.addItem();">Add Item</button>
+      <ol>
+        <li ng-repeat="item in list2.items">
+          {{ item.quantity }} of {{ item.name }}
+          <button ng-click="list2.removeItem($index);">Remove Item</button>
+        </li>
+      </ol>
+      <div class="error">Error: {{list2.errorMessage}}</div>
+    </div>
+
+  </body>
+</html>
